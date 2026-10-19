@@ -9,7 +9,7 @@
   <title>miolo.</title>
 
   <!-- Estilos do site -->
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 
 <body>
@@ -33,7 +33,9 @@
 
   <main>
 
-    <!-- INÍCIO -->
+    <!-- =====================================
+         INÍCIO
+         ===================================== -->
     <section class="page active" id="home">
 
       <div class="hero">
@@ -86,7 +88,10 @@
 
     </section>
 
-    <!-- CATÁLOGO -->
+
+    <!-- =====================================
+         CATÁLOGO
+         ===================================== -->
     <section class="page" id="catalog">
 
       <div class="content">
@@ -106,7 +111,10 @@
 
     </section>
 
-    <!-- CARRINHO -->
+
+    <!-- =====================================
+         CARRINHO
+         ===================================== -->
     <section class="page" id="cart">
 
       <div class="content">
@@ -126,33 +134,41 @@
             <h2 id="total">R$ 0,00</h2>
           </div>
 
-            <button
+          <button
             class="cta"
             id="finalizar-pedido"
             type="button"
-            >
+          >
             Finalizar pedido →
-            </button>
+          </button>
 
         </div>
 
         <p class="note">
-          Protótipo acadêmico. As imagens são ilustrativas.
-          Não há pagamento real ou envio de pedidos.
-          O login é gerenciado pelo Firebase.
+          Protótipo acadêmico. As imagens e os preços são
+          ilustrativos. Os pedidos demonstrativos são
+          registrados no Cloud Firestore.
+          Nenhum pagamento real é realizado.
         </p>
 
       </div>
 
     </section>
 
-    <!-- MINHA CONTA -->
+
+    <!-- =====================================
+         MINHA CONTA
+         ===================================== -->
     <section class="page" id="account">
 
       <div class="content account-layout">
 
+        <!-- Apresentação -->
         <div class="account-intro">
-          <div class="eyebrow">Sua conta, seu momento</div>
+
+          <div class="eyebrow">
+            Sua conta, seu momento
+          </div>
 
           <h1 class="section-title">
             Entre para o lado doce.
@@ -163,14 +179,20 @@
             A Miolo é um projeto acadêmico:
             não há pagamentos reais.
           </p>
+
         </div>
 
+
+        <!-- Painel de autenticação -->
         <div class="auth-panel">
 
-          <!-- Usuário desconectado -->
+          <!-- =================================
+               USUÁRIO DESCONECTADO
+               ================================= -->
           <div id="auth-logged-out">
 
             <div class="auth-tabs">
+
               <button
                 id="tab-login"
                 type="button"
@@ -179,15 +201,27 @@
                 Entrar
               </button>
 
-              <button id="tab-signup" type="button">
+              <button
+                id="tab-signup"
+                type="button"
+              >
                 Criar conta
               </button>
+
             </div>
 
+
+            <!-- Formulário -->
             <form id="auth-form">
 
-              <div class="field" id="name-field" hidden>
-                <label for="auth-name">Nome</label>
+              <div
+                class="field"
+                id="name-field"
+                hidden
+              >
+                <label for="auth-name">
+                  Nome
+                </label>
 
                 <input
                   id="auth-name"
@@ -197,8 +231,12 @@
                 >
               </div>
 
+
               <div class="field">
-                <label for="auth-email">E-mail</label>
+
+                <label for="auth-email">
+                  E-mail
+                </label>
 
                 <input
                   id="auth-email"
@@ -207,10 +245,15 @@
                   required
                   placeholder="voce@exemplo.com"
                 >
+
               </div>
 
+
               <div class="field">
-                <label for="auth-password">Senha</label>
+
+                <label for="auth-password">
+                  Senha
+                </label>
 
                 <input
                   id="auth-password"
@@ -220,7 +263,9 @@
                   required
                   placeholder="Pelo menos 6 caracteres"
                 >
+
               </div>
+
 
               <button
                 id="auth-submit"
@@ -232,6 +277,8 @@
 
             </form>
 
+
+            <!-- Recuperação de senha -->
             <button
               id="forgot-password"
               class="text-button"
@@ -240,7 +287,11 @@
               Esqueci minha senha
             </button>
 
-            <div class="auth-separator">ou</div>
+
+            <!-- Login com Google -->
+            <div class="auth-separator">
+              ou
+            </div>
 
             <button
               id="google-login"
@@ -251,6 +302,8 @@
               Continuar com Google
             </button>
 
+
+            <!-- Mensagens da autenticação -->
             <p
               class="auth-message"
               id="auth-message"
@@ -259,31 +312,83 @@
             ></p>
 
           </div>
+          <!-- Fim: auth-logged-out -->
 
-          <!-- Usuário conectado -->
+
+          <!-- =================================
+               USUÁRIO CONECTADO
+               ================================= -->
           <div id="auth-logged-in" hidden>
 
             <div class="eyebrow">
               Você está conectado(a)
             </div>
 
-            <h2 id="user-greeting">Olá!</h2>
+            <h2 id="user-greeting">
+              Olá!
+            </h2>
 
-            <p id="user-email" class="sub"></p>
+            <p
+              id="user-email"
+              class="sub"
+            ></p>
 
             <p class="note">
               Sua sessão é gerenciada pelo Firebase
-              Authentication. Os pedidos serão integrados
-              ao Firestore em uma próxima etapa.
+              Authentication. Seus pedidos demonstrativos
+              são registrados no Cloud Firestore.
+              Nenhum pagamento real é realizado.
             </p>
 
+
+            <!-- =============================
+                 HISTÓRICO DE PEDIDOS
+                 ============================= -->
+            <section
+              id="orders-section"
+              class="orders-section"
+              aria-labelledby="orders-title"
+            >
+
+              <div class="orders-heading">
+
+                <div>
+                  <p class="eyebrow">
+                    SUAS ESCOLHAS
+                  </p>
+
+                  <h2 id="orders-title">
+                    Meus pedidos
+                  </h2>
+                </div>
+
+              </div>
+
+
+              <!-- Pedidos inseridos pelo JavaScript -->
+              <div
+                id="orders-list"
+                aria-live="polite"
+              >
+                <p>
+                  Carregando seus pedidos...
+                </p>
+              </div>
+
+            </section>
+            <!-- Fim: Histórico de pedidos -->
+
+
+            <!-- Sair da conta -->
             <button
               id="logout"
               class="cta"
               type="button"
+              style="margin-top: 30px;"
             >
               Sair da conta
             </button>
+
 
             <p
               class="auth-message"
@@ -292,31 +397,53 @@
             ></p>
 
           </div>
+          <!-- Fim: auth-logged-in -->
 
         </div>
+        <!-- Fim: auth-panel -->
 
       </div>
+      <!-- Fim: content account-layout -->
 
     </section>
+    <!-- Fim: Minha conta -->
 
   </main>
 
+
+  <!-- =====================================
+       RODAPÉ
+       ===================================== -->
   <footer>
-    <div class="logo">miolo<span>.</span></div>
+
+    <div class="logo">
+      miolo<span>.</span>
+    </div>
 
     <div>
       Confeitaria alternativa · Projeto acadêmico PIT II ·
       Imagens ilustrativas
     </div>
+
   </footer>
 
-  <div class="toast" id="toast" role="status"></div>
 
-  <!-- Catálogo e carrinho -->
+  <!-- Notificações -->
+  <div
+    class="toast"
+    id="toast"
+    role="status"
+  ></div>
+
+
+  <!-- Catálogo, carrinho e pedidos -->
   <script src="js/app.js?v=3"></script>
 
-  <!-- Autenticação Firebase -->
-  <script type="module" src="js/auth.js"></script>
+  <!-- Autenticação e histórico de pedidos -->
+  <script
+    type="module"
+    src="js/auth.js?v=2"
+  ></script>
 
 </body>
 </html>

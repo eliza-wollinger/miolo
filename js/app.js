@@ -1,6 +1,4 @@
 
-// Catálogo Miolo: produtos públicos no Cloud Firestore.
-// Este arquivo continua sendo um script clássico (não exige type="module").
 let products = [];
 let filter = 'Todos';
 let cart = {};
@@ -316,8 +314,7 @@ async function loadProducts() {
 
 
 /* ==========================================
-   MIOLO — FINALIZAÇÃO DE PEDIDOS
-   Pedidos demonstrativos no Firestore
+   FINALIZAÇÃO DE PEDIDOS
    ========================================== */
 
 let finalizandoPedido = false;
