@@ -314,4 +314,192 @@ async function loadProducts() {
   }
 }
 
+
+/* ==========================================
+   MIOLO — FINALIZAÇÃO DE PEDIDOS
+   Pedidos demonstrativos no Firestore
+   ========================================== */
+
+let finalizandoPedido = false;
+
+async function finalizarPedido() {
+
+  // Impede dois envios simultâneos.
+  if (finalizandoPedido) {
+    return;
+  }
+
+  // Verifica se o catálogo foi carregado.
+  if (products.length === 0) {
+    alert('Aguarde o carregamento do catálogo.');
+    return;
+  }
+
+  // Recupera os produtos presentes no carrinho.
+  const itens = Object.entries(cart)
+    .filter(([id, quantidade]) => {
+      return products.some(p => p.id === id)
+        && Number.isInteger(quantidade)
+        && quantidade >= 1;
+    })
+    .map(([id, quantidade]) => {
+
+      const produto = products.find(p => p.id === id);
+
+      return {
+        produtoId: produto.id,
+        nome: produto.name,
+        preco: produto.price,
+        quantidade: quantidade
+      };
+    });
+
+  // Não permite finalizar um carrinho vazio.
+  if (itens.length === 0) {
+    alert('Seu carrinho está vazio!');
+    return;
+  }
+
+  // Limites compatíveis com as regras do Firestore.
+  if (
+    itens.length > 7 ||
+    itens.some(item => item.quantidade > 20)
+  ) {
+    alert(
+      'O pedido permite até 7 produtos diferentes ' +
+      'e 20 unidades de cada produto.'
+    );
+    return;
+  }
+
+  // Calcula o total demonstrativo.
+  const total = Number(
+    itens.reduce((soma, item) => {
+      return soma + item.preco * item.quantidade;
+    }, 0).toFixed(2)
+  );
+
+  if (
+    !Number.isFinite(total) ||
+    total < 0 ||
+    total > 200000
+  ) {
+    alert('O total do pedido é inválido.');
+    return;
+  }
+
+  let botao = document.querySelector('.checkout .cta');
+
+  try {
+
+    finalizandoPedido = true;
+
+    if (botao) {
+      botao.disabled = true;
+      botao.textContent = 'Finalizando...';
+    }
+
+    // Importa os módulos Firebase.
+    const [
+      { getApp },
+      { getAuth },
+      { getFirestore, collection, addDoc, serverTimestamp }
+    ] = await Promise.all([
+      import('https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js'),
+      import('https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js'),
+      import('https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js')
+    ]);
+
+    const app = getApp();
+    const auth = getAuth(app);
+
+    // Aguarda o Firebase recuperar a sessão.
+    await auth.authStateReady();
+
+    const usuario = auth.currentUser;
+
+    // Exige autenticação antes de criar o pedido.
+    if (!usuario) {
+      alert(
+        'Para finalizar seu pedido, ' +
+        'entre na sua conta ou faça seu cadastro.'
+      );
+
+      show('account');
+      return;
+    }
+
+    const db = getFirestore(app);
+
+    // Estrutura do documento no Firestore.
+    const pedido = {
+      usuarioId: usuario.uid,
+      itens: itens,
+      total: total,
+      status: 'Recebido',
+      criadoEm: serverTimestamp()
+    };
+
+    // Grava o pedido no banco de dados.
+    const referencia = await addDoc(
+      collection(db, 'pedidos'),
+      pedido
+    );
+
+    console.log(
+      'Pedido registrado:',
+      referencia.id
+    );
+
+    // Limpa o carrinho somente após salvar.
+    cart = {};
+    render();
+
+    alert(
+      'Pedido demonstrativo registrado com sucesso!\n\n' +
+      'Número do pedido:\n' +
+      referencia.id +
+      '\n\n' +
+      'Total: ' + money(total) +
+      '\n\n' +
+      'Nenhum pagamento foi realizado.'
+    );
+
+    show('account');
+
+  } catch (erro) {
+
+    console.error(
+      'Erro ao finalizar pedido:',
+      erro
+    );
+
+    alert(
+      'Não foi possível registrar seu pedido.\n' +
+      'O carrinho foi mantido para você tentar novamente.'
+    );
+
+  } finally {
+
+    finalizandoPedido = false;
+
+    if (botao) {
+      botao.disabled = false;
+      botao.textContent = 'Finalizar pedido';
+    }
+
+  }
+}
+
+/* Conecta a função ao botão existente. */
+
+const botaoFinalizar = document.querySelector(
+  '.checkout .cta'
+);
+
+if (botaoFinalizar) {
+  botaoFinalizar.onclick = finalizarPedido;
+}
+
+
 loadProducts();
