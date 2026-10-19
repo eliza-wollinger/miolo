@@ -1,4 +1,4 @@
-# Miolo — Confeitaria Alternativa
+# Miolo
 
 A **Miolo** é um projeto de confeitaria alternativa desenvolvido como parte das atividades acadêmicas da disciplina de Projeto Integrador Transdisciplinar (PIT).
 
@@ -13,6 +13,8 @@ A Miolo foi pensada como uma confeitaria com uma identidade visual própria, fug
 Optei por uma combinação de cores mais neutras, com detalhes em tons de vinho, e uma apresentação mais simples dos produtos.
 
 Durante o desenvolvimento, procurei manter a navegação intuitiva e organizar o código de forma que fosse possível adicionar novas funcionalidades sem precisar reconstruir o projeto inteiro.
+
+![Moodboard da Miolo — Confeitaria Alternativa](assets/branding/moodboard.png)
 
 ## Funcionalidades
 
