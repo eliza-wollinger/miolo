@@ -87,6 +87,7 @@ miolo/
 │   ├── auth.js
 │   └── firebase-config.js
 ├── assets/
+│   ├── branding/
 │   └── images/
 └── README.md
 ```
