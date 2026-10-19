@@ -448,9 +448,15 @@ async function finalizarPedido() {
       referencia.id
     );
 
+    
     // Limpa o carrinho somente após salvar.
     cart = {};
     render();
+
+    // Atualiza o histórico de pedidos.
+    window.dispatchEvent(
+      new Event('miolo:pedido-criado')
+    );
 
     alert(
       'Pedido demonstrativo registrado com sucesso!\n\n' +
