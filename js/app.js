@@ -493,8 +493,8 @@ async function finalizarPedido() {
 
 /* Conecta a função ao botão existente. */
 
-const botaoFinalizar = document.querySelector(
-  '.checkout .cta'
+const botaoFinalizar = document.getElementById(
+  'finalizar-pedido'
 );
 
 if (botaoFinalizar) {
