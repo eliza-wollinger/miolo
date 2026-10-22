@@ -5,9 +5,14 @@
   "description": "Miolo - Confeitaria Alternativa",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:unit": "vitest run tests/cart.test.js",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "jsdom": "^26.1.0",
+    "@playwright/test": "^1.56.0"
   }
 }
