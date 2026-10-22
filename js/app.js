@@ -163,12 +163,8 @@ function render() {
       }).join('')
     : '<div class="empty">Seu carrinho está vazio. Que tal escolher um bolinho?</div>';
 
-  $('total').textContent = money(
-    entries.reduce(
-      (sum, [id, qty]) => sum + available.get(id).price * qty,
-      0
-    )
-  );
+  // Utiliza a função testada pelo Vitest.
+  $('total').textContent = money(calculateTotal(cart, products));
 
   save();
 }
@@ -178,7 +174,8 @@ function add(id) {
     return;
   }
 
-  cart[id] = (cart[id] || 0) + 1;
+  // Utiliza a função testada pelo Vitest.
+  cart = addToCart(cart, id);
   render();
 
   const toast = $('toast');
@@ -194,7 +191,11 @@ function add(id) {
 }
 
 function change(id, delta) {
-  cart[id] = Math.max(0, (cart[id] || 0) + delta);
+  if (!products.some(p => p.id === id)) return;
+  if (!Number.isInteger(delta) || Math.abs(delta) !== 1) return;
+
+  // Utiliza a função testada pelo Vitest.
+  cart = changeQuantity(cart, id, delta);
   render();
 }
 
@@ -448,7 +449,6 @@ async function finalizarPedido() {
       referencia.id
     );
 
-    
     // Limpa o carrinho somente após salvar.
     cart = {};
     render();
@@ -503,6 +503,5 @@ const botaoFinalizar = document.getElementById(
 if (botaoFinalizar) {
   botaoFinalizar.onclick = finalizarPedido;
 }
-
 
 loadProducts();
