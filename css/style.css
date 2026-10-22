@@ -1139,3 +1139,26 @@ footer > div:last-child {
     font-size: 16px;
   }
 }
+
+/* Cancelamento de pedidos */
+.order-status--cancelled {
+  background: #E9E1E5;
+  color: #765967;
+}
+.order-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.order-cancel-button {
+  padding: 10px 14px;
+  background: transparent;
+  color: #A84249;
+  border: 1px solid #A84249;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.order-cancel-button:hover { background: #F8EDEF; }
+.order-cancel-button:focus-visible { outline: 3px solid var(--wine-soft); outline-offset: 3px; }
+.order-cancelled-date { margin-top: 14px; color: var(--muted); font-size: 12px; }

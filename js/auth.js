@@ -21,7 +21,10 @@ import {
   collection,
   query,
   where,
-  getDocs
+  getDocs,
+  doc,
+  runTransaction,
+  serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
 
 import { firebaseConfig } from './firebase-config.js';
@@ -401,6 +404,7 @@ function renderUser(user) {
    ========================================== */
 
 let ordersRequest = 0;
+let cancellingOrder = false;
 
 async function loadOrders(user) {
 
@@ -511,6 +515,13 @@ async function loadOrders(user) {
       }).join('');
 
 
+      const cancelled = order.status === 'Cancelado';
+      const canCancel = order.status === 'Recebido';
+      const cancelledDate = order.canceladoEm?.toDate?.();
+      const cancelledLabel = cancelledDate
+        ? cancelledDate.toLocaleString('pt-BR')
+        : '';
+
       return `
         <article class="order-card">
 
@@ -528,7 +539,7 @@ async function loadOrders(user) {
 
             </div>
 
-            <span class="order-status">
+            <span class="order-status ${cancelled ? 'order-status--cancelled' : ''}">
               ${escapeHTML(order.status)}
             </span>
 
@@ -551,6 +562,9 @@ async function loadOrders(user) {
             </strong>
 
           </div>
+
+          ${cancelled ? `<p class="order-cancelled-date">Cancelado${cancelledLabel ? ` em ${escapeHTML(cancelledLabel)}` : ''}</p>` : ''}
+          ${canCancel ? `<div class="order-actions"><button type="button" class="order-cancel-button" data-cancel-order="${escapeHTML(order.id)}">Cancelar pedido</button></div>` : ''}
 
         </article>
       `;
@@ -581,6 +595,65 @@ async function loadOrders(user) {
 
   }
 }
+
+
+/* ==========================================
+   CANCELAMENTO DE PEDIDOS
+   ========================================== */
+
+$('orders-list').addEventListener('click', async event => {
+  const button = event.target.closest('[data-cancel-order]');
+  if (!button || cancellingOrder) return;
+
+  const user = auth.currentUser;
+  if (!user) {
+    alert('Entre na sua conta para cancelar o pedido.');
+    return;
+  }
+
+  const orderId = button.dataset.cancelOrder;
+  if (!orderId || !confirm('Deseja realmente cancelar este pedido? Esta ação não pode ser desfeita.')) {
+    return;
+  }
+
+  cancellingOrder = true;
+  button.disabled = true;
+  button.textContent = 'Cancelando...';
+
+  try {
+    const orderRef = doc(db, 'pedidos', orderId);
+    await runTransaction(db, async transaction => {
+      const snapshot = await transaction.get(orderRef);
+      if (!snapshot.exists()) throw new Error('Pedido não encontrado.');
+      const order = snapshot.data();
+      if (order.usuarioId !== user.uid) throw new Error('Este pedido não pertence à sua conta.');
+      if (order.status !== 'Recebido') throw new Error('Este pedido não pode mais ser cancelado.');
+      transaction.update(orderRef, {
+        status: 'Cancelado',
+        canceladoEm: serverTimestamp()
+      });
+    });
+
+    if (auth.currentUser?.uid === user.uid) {
+      await loadOrders(user);
+      alert('Pedido cancelado com sucesso.');
+    }
+  } catch (error) {
+    console.error('Erro ao cancelar pedido:', error);
+    if (auth.currentUser?.uid === user.uid) {
+      alert(error.message?.startsWith('Este pedido') || error.message === 'Pedido não encontrado.'
+        ? error.message
+        : 'Não foi possível cancelar o pedido. Tente novamente.');
+      await loadOrders(user);
+    }
+  } finally {
+    cancellingOrder = false;
+    if (button.isConnected) {
+      button.disabled = false;
+      button.textContent = 'Cancelar pedido';
+    }
+  }
+});
 
 
 /* ==========================================
