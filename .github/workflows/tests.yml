@@ -6,13 +6,18 @@ on:
     branches:
       - main
       - feature/automated-tests
+
   pull_request:
     branches:
       - main
+
   workflow_dispatch:
 
 jobs:
+
+  # Testes unitários e de integração
   tests:
+    name: Unit and Integration Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -27,5 +32,39 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
+      - name: Run Vitest
         run: npm test
+
+  # Testes de ponta a ponta
+  e2e:
+    name: End-to-End Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright
+        run: npm run test:e2e
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7
