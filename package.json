@@ -1,0 +1,13 @@
+{
+  "name": "miolo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Miolo - Confeitaria Alternativa",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}
