@@ -128,7 +128,11 @@ Os principais arquivos são:
 
 A aplicação está publicada no GitHub Pages:
 
-**[Miolo — Confeitaria Alternativa](https://eliza-wollinger.github.io/miolo/)**
+<p align="center">
+  <a href="https://eliza-wollinger.github.io/miolo/">
+    <img src="https://img.shields.io/badge/ACESSAR%20A%20MIOLO-34212B?style=for-the-badge&logo=githubpages&logoColor=white" alt="Acessar a Miolo">
+  </a>
+</p>
 
 Para executar o projeto localmente, é possível clonar o repositório e abrir a aplicação utilizando um servidor local, como a extensão Live Server do VS Code.
 
