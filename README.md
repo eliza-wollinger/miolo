@@ -112,7 +112,9 @@ miolo/
 │   └── firebase-config.js
 ├── assets/
 │   ├── branding/
+│       └── moodboard.png
 │   └── images/
+│       └── arquivos dos cupcakes
 └── README.md
 ```
 
