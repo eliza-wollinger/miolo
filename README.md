@@ -1,10 +1,34 @@
 # Miolo
 
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Funcional-38664B?style=for-the-badge" alt="Status funcional">
+  <img src="https://img.shields.io/badge/Projeto-PIT%20II-765967?style=for-the-badge" alt="Projeto PIT II">
+  <img src="https://img.shields.io/badge/Plataforma-Web-34212B?style=for-the-badge" alt="Plataforma Web">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/Firebase-DD2C00?style=flat-square&logo=firebase&logoColor=white" alt="Firebase">
+  <img src="https://img.shields.io/badge/GitHub%20Pages-222222?style=flat-square&logo=githubpages&logoColor=white" alt="GitHub Pages">
+</p>
+
+
 A **Miolo** é um projeto de confeitaria alternativa desenvolvido como parte das atividades acadêmicas da disciplina de Projeto Integrador Transdisciplinar (PIT).
 
 A proposta foi criar uma aplicação web que simulasse uma loja virtual de cupcakes, permitindo que o usuário navegasse pelos produtos, adicionasse itens ao carrinho, criasse uma conta e registrasse pedidos.
 
 Além de desenvolver a interface, quis trabalhar com algumas funcionalidades que aproximassem o projeto de uma aplicação real, principalmente a autenticação de usuários e o armazenamento de informações em banco de dados.
+
+
+<p align="center">
+  <a href="https://eliza-wollinger.github.io/miolo/">
+    <img src="https://img.shields.io/badge/ACESSAR%20A%20MIOLO-34212B?style=for-the-badge&logo=githubpages&logoColor=white" alt="Acessar a Miolo">
+  </a>
+</p>
+
 
 ## Sobre o projeto
 
