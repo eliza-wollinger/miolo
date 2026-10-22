@@ -1,2 +1,47 @@
+
+# Sistema operacional
 .DS_Store
 Thumbs.db
+Desktop.ini
+
+# Configurações locais do editor
+.vscode/
+.idea/
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Credenciais e chaves privadas
+*.pem
+*.key
+*.p12
+*.pfx
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
+
+# Dependências e arquivos gerados
+node_modules/
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache e arquivos temporários
+.cache/
+.tmp/
+temp/
+*.tmp
+*.bak
+
+# Emuladores Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
